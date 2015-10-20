@@ -64,3 +64,20 @@ target_link_libraries(ICP
 )
 target_include_directories(ICP PUBLIC ${Pangolin_INCLUDE_DIRS})
 
+install(
+  TARGETS icpcuda
+  DESTINATION lib
+)
+
+install(
+  DIRECTORY src/
+  DESTINATION include/icpcuda
+  FILES_MATCHING PATTERN "*.h"
+)
+
+install(
+  DIRECTORY src/
+  DESTINATION include/icpcuda
+  FILES_MATCHING PATTERN "*.hpp"
+)
+

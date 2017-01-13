@@ -30,7 +30,11 @@ class ICPOdometry
 
         void initICP(unsigned short * depth, const float depthCutoff = 20.0f);
 
+        void initICP(const DeviceArray2D<unsigned short>& depth, const float depthCutoff = 20.0f);
+
         void initICPModel(unsigned short * depth, const float depthCutoff = 20.0f);
+
+        void initICPModel(const DeviceArray2D<unsigned short>& depth, const float depthCutoff = 20.0f);
 
         void getIncrementalTransformation(Sophus::SE3d & T_prev_curr, int threads, int blocks);
 

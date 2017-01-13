@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 2.6.0)
 
 project(ICP)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 find_package(Pangolin REQUIRED)
 find_package(CUDA REQUIRED)
 find_package(Sophus REQUIRED)

@@ -21,7 +21,6 @@ find_package(Sophus REQUIRED)
   set(EIGEN_DEFINITIONS ${EIGEN_DEFINITIONS} -DEIGEN_USE_NEW_STDVECTOR 
       -DEIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET)
       
-include_directories(${Pangolin_INCLUDE_DIRS})
 include_directories(${CUDA_INCLUDE_DIRS})
 include_directories(${EIGEN_INCLUDE_DIRS})
 include_directories(${Sophus_INCLUDE_DIR})
@@ -44,16 +43,22 @@ CUDA_COMPILE(cuda_objs ${cuda})
 
 set(CMAKE_CXX_FLAGS "-O3 -msse2 -msse3 -Wall -std=c++11")
 
-add_executable(ICP 
-               ${srcs}
-               ${cuda} 
-               ${cuda_objs} 
-               ${containers}
+add_library(icpcuda
+  src/ICPOdometry.cpp
+  ${cuda}
+  ${cuda_objs}
+  ${containers}
+)
+
+add_executable(ICP
+  src/ICP.cpp
 )
 
 target_link_libraries(ICP
+                      icpcuda
                       ${Pangolin_LIBRARIES}
                       ${Eigen_LIBRARIES}
                       ${CUDA_LIBRARIES}
 )
+target_include_directories(ICP PUBLIC ${Pangolin_INCLUDE_DIRS})
 

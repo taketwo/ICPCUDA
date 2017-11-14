@@ -9,16 +9,14 @@ find_package(CUDA REQUIRED)
 find_package(Sophus REQUIRED)
 
 #remove this as soon as eigen is shipped with FindEigen.cmake
-  get_filename_component(EIGEN_ROOT "/usr/include/local/eigen3" PATH)
-  if(PKG_CONFIG_FOUND)
-    pkg_check_modules(PC_EIGEN eigen3)
-  endif(PKG_CONFIG_FOUND)
   find_path(EIGEN_INCLUDE_DIRS Eigen/Core
     HINTS ${PC_EIGEN_INCLUDEDIR} ${PC_EIGEN_INCLUDE_DIRS} 
           "${EIGEN_ROOT}" "$ENV{EIGEN_ROOT}"
+          "/usr/include"
     PATHS "$ENV{PROGRAMFILES}/Eigen 3.0.0" "$ENV{PROGRAMW6432}/Eigen 3.0.0"
           "$ENV{PROGRAMFILES}/Eigen" "$ENV{PROGRAMW6432}/Eigen"   
-    PATH_SUFFIXES eigen3 include/eigen3 include)
+    PATH_SUFFIXES eigen3 include/eigen3 include
+    NO_DEFAULT_PATH)
   find_package_handle_standard_args(eigen DEFAULT_MSG EIGEN_INCLUDE_DIRS)
   set(EIGEN_DEFINITIONS ${EIGEN_DEFINITIONS} -DEIGEN_USE_NEW_STDVECTOR 
       -DEIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET)
